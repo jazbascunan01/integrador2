@@ -1,12 +1,12 @@
-package main.java.org.example.modelo;
+package org.example.modelo;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "Estudiante_Carrera")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Table
 @Entity
 public class Estudiante_Carrera {
     @Id
@@ -29,12 +29,4 @@ public class Estudiante_Carrera {
 
     @Column
     private int antiguedad;
-
-    public Estudiante_Carrera(Estudiante estudiante, Carrera carrera, int anio_ins, int anio_grad, int antiguedad) {
-        this.anio_inscripcion = anio_ins;
-        this.anio_graduacion = anio_grad;
-        this.antiguedad = antiguedad;
-        this.estudiante = estudiante;
-        this.carrera = carrera;
-    }
 }

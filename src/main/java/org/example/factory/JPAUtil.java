@@ -1,4 +1,4 @@
-package main.java.org.example.factory;
+package org.example.factory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
