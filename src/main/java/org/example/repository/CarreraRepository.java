@@ -1,6 +1,7 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
+import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 import org.example.modelo.Estudiante;
@@ -52,5 +53,22 @@ public class CarreraRepository {
         ).getResultList();
         em.close();
         return carreras;
+    }
+
+    public List<Object[]> getReporteCarreras() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            String jpql = "SELECT c.nombre, ec.anio_inscripcion, " +
+                    "COUNT(DISTINCT ec.estudiante), " +
+                    "SUM(CASE WHEN ec.anio_graduacion IS NOT NULL THEN 1 ELSE 0 END) " +
+                    "FROM Estudiante_Carrera ec " +
+                    "JOIN ec.carrera c " +
+                    "GROUP BY c.nombre, ec.anio_inscripcion " +
+                    "ORDER BY c.nombre ASC, ec.anio_inscripcion ASC";
+
+            return em.createQuery(jpql, Object[].class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 }

@@ -9,6 +9,8 @@ import org.example.repository.CarreraRepository;
 import org.example.repository.EstudianteRepository;
 import org.example.repository.Estudiante_CarreraRepository;
 
+import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -65,6 +67,28 @@ public class Main {
         //System.out.println(estudianteRepository.getEstudianteByLU(1001));
         //System.out.println(estudianteRepository.verEstudiantesPorGenero("Male"));
         //System.out.println(carrera_repository.getCarrerasConEstudiantes());
-        System.out.println(estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan"));
+        //System.out.println(estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan"));
+        imprimirReporte(carrera_repository);
     }
+
+    public static void imprimirReporte(CarreraRepository carreraRepository) {
+        List<Object[]> reporte = carreraRepository.getReporteCarreras();
+
+        String carreraActual = null;
+        for (Object[] fila : reporte) {
+            String nombreCarrera = (String) fila[0];
+            int anio = (int) fila[1];
+            long inscriptos = (long) fila[2];
+            long egresados = (long) fila[3];
+
+            if (!nombreCarrera.equals(carreraActual)) {
+                System.out.println("\nCarrera: " + nombreCarrera);
+                carreraActual = nombreCarrera;
+            }
+
+            System.out.printf("Año %d: Inscriptos: %d, Egresados: %d%n",
+                    anio, inscriptos, egresados);
+        }
+    }
+
 }
