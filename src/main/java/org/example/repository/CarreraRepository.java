@@ -1,7 +1,6 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 

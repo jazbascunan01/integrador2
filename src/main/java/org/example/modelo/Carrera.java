@@ -1,9 +1,7 @@
 package org.example.modelo;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.modelo.Estudiante_Carrera;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor

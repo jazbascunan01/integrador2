@@ -2,7 +2,6 @@ package org.example.repository;
 
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 import org.example.modelo.Estudiante;
@@ -10,7 +9,6 @@ import org.example.modelo.Estudiante_Carrera;
 
 
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class Estudiante_CarreraRepository {
     public void insertarDesdeCSV(String path) {
