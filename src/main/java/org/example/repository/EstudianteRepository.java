@@ -1,14 +1,11 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Estudiante;
-import org.example.modelo.Estudiante_Carrera;
 
 
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class EstudianteRepository {
     public void insertarDesdeCSV(String path) {
@@ -61,6 +58,8 @@ public class EstudianteRepository {
     }
     /**
      * Punto A: dar de alta un estudiante
+     *
+     * @param estudiante el objeto que representa el estudiante.
      */
     public void altaEstudiante(Estudiante estudiante) {
         EntityManager em = JPAUtil.getEntityManager();
