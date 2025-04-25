@@ -1,4 +1,5 @@
 package org.example.repository;
+
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -44,4 +45,18 @@ public class Estudiante_CarreraRepository {
             em.close();
         }
     }
+
+    /**
+     * Inciso b. Guarda la matrícula de un estudiante en una carrera.
+     *
+     * @param ec el objeto que representa la inscripción del estudiante.
+     */
+    public void matricularEstudiante(Estudiante_Carrera ec) {
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.persist(ec);
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }
