@@ -59,4 +59,16 @@ public class EstudianteRepository {
             em.close();
         }
     }
+    /**
+     * Punto A: dar de alta un estudiante
+     */
+    public void altaEstudiante(Estudiante estudiante) {
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.persist(estudiante);
+        em.getTransaction().commit();
+        em.close();
+        System.out.println("Estudiante dado de alta correctamente.");
+    }
+
 }
