@@ -63,6 +63,8 @@ public class Main {
 
         //System.out.println(estudianteRepository.verEstudiantesOrdenadosPorDNI());
         //System.out.println(estudianteRepository.getEstudianteByLU(1001));
-        System.out.println(estudianteRepository.verEstudiantesPorGenero("Male"));
+        //System.out.println(estudianteRepository.verEstudiantesPorGenero("Male"));
+        //System.out.println(carrera_repository.getCarrerasConEstudiantes());
+        System.out.println(estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan"));
     }
 }

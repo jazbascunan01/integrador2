@@ -20,6 +20,17 @@ public class Carrera {
 
     @Column
     private int duracion;
-    @OneToMany(mappedBy = "carrera")
+    // TODO ver que problema hay con el LAZY
+    @OneToMany(mappedBy = "carrera", fetch = FetchType.EAGER)
     private List<Estudiante_Carrera> carreras;
+
+    @Override
+    public String toString() {
+        return "Carrera{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", duracion=" + duracion +
+                ", carreras=" + carreras +
+                '}';
+    }
 }

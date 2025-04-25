@@ -114,4 +114,27 @@ public class EstudianteRepository {
         return estudiantes;
     }
 
+    /**
+     * Punto G: recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+     *
+     * @return estudiantes
+     */
+    public List<Estudiante> getEstudiantesByCarreraYCiudad(String carreraNombre, String ciudad) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            String jpql = "SELECT DISTINCT e FROM Estudiante e " +
+                    "JOIN e.carreras ec " +
+                    "JOIN ec.carrera c " +
+                    "WHERE c.nombre = :carreraNombre " +
+                    "AND e.ciudad = :ciudad";
+
+            List<Estudiante> estudiantes = em.createQuery(jpql, Estudiante.class)
+                    .setParameter("carreraNombre", carreraNombre)
+                    .setParameter("ciudad", ciudad)
+                    .getResultList();
+            return estudiantes;
+        } finally {
+            em.close();
+        }
+    }
 }
