@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table
 @Entity
 public class Estudiante {
@@ -26,12 +27,12 @@ public class Estudiante {
     private String ciudad;
     @Column (nullable = false)
     private int num_lu;
-
-    @OneToMany (mappedBy = "estudiante")
+// TODO ver que problema hay con el LAZY
+    @OneToMany (mappedBy = "estudiante", fetch = FetchType.EAGER)
     private List<Estudiante_Carrera> carreras;
 
 
-    public Estudiante(int dni, String nombre, String apellido,  int edad, String sexo, String ciudad, int LU ) {
+    public Estudiante(int dni, String nombre, String apellido,  int edad, String genero, String ciudad, int LU ) {
         this.num_lu = LU;
         this.ciudad = ciudad;
         this.genero = genero;

@@ -1,11 +1,14 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Estudiante;
 
 
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EstudianteRepository {
     public void insertarDesdeCSV(String path) {
@@ -68,6 +71,47 @@ public class EstudianteRepository {
         em.getTransaction().commit();
         em.close();
         System.out.println("Estudiante dado de alta correctamente.");
+    }
+
+    /**
+     * Punto C: recuperar todos los estudiantes ordenados por DNI
+     *
+     * @return lista de estudiantes
+     */
+    public List<Estudiante> verEstudiantesOrdenadosPorDNI() {
+        EntityManager em = JPAUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("SELECT e FROM Estudiante e ORDER BY e.dni", Estudiante.class);
+        List<Estudiante> estudiantes = query.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return estudiantes;
+    }
+
+    /**
+     * Punto D: recuperar un estudiante, en base a su número de libreta universitaria
+     *
+     * @return estudiante
+     */
+    public Estudiante getEstudianteByLU(int num_lu) {
+        EntityManager em = JPAUtil.getEntityManager();
+        return em.createQuery("SELECT e FROM Estudiante e WHERE e.num_lu = :num_lu", Estudiante.class)
+                .setParameter("num_lu", num_lu).getSingleResult();
+    }
+
+
+    /**
+     * Punto E: recuperar todos los estudiantes, en base a su género.
+     *
+     * @return estudiantes por género
+     */
+    public List<Estudiante> verEstudiantesPorGenero(String genero) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
+                .setParameter("genero", genero)
+                .getResultList();
+        em.close();
+        return estudiantes;
     }
 
 }

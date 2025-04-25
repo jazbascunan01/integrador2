@@ -60,5 +60,9 @@ public class Main {
         } else {
             System.out.println("No se encontró el estudiante o la carrera.");
         }
+
+        //System.out.println(estudianteRepository.verEstudiantesOrdenadosPorDNI());
+        //System.out.println(estudianteRepository.getEstudianteByLU(1001));
+        System.out.println(estudianteRepository.verEstudiantesPorGenero("Male"));
     }
 }
