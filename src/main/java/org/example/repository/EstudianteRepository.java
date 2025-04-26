@@ -2,6 +2,7 @@ package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.example.dto.EstudianteDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Estudiante;
 
@@ -78,16 +79,23 @@ public class EstudianteRepository {
      *
      * @return lista de estudiantes
      */
-    public List<Estudiante> verEstudiantesOrdenadosPorDNI() {
+    public List<EstudianteDTO> verEstudiantesOrdenadosPorDNI() {
         EntityManager em = JPAUtil.getEntityManager();
-        em.getTransaction().begin();
-        Query query = em.createQuery("SELECT e FROM Estudiante e ORDER BY e.dni", Estudiante.class);
-        List<Estudiante> estudiantes = query.getResultList();
-        em.getTransaction().commit();
-        em.close();
-        return estudiantes;
+        List<EstudianteDTO> estudianteDTOS = new ArrayList<>();
+        try {
+            estudianteDTOS = em.createQuery(
+                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
+                                    "FROM Estudiante e " +
+                                    "ORDER BY e.dni",
+                            EstudianteDTO.class)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error al ordenar estudiantes por DNI: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return estudianteDTOS;
     }
-
     /**
      * Punto D: recuperar un estudiante, en base a su número de libreta universitaria
      *
