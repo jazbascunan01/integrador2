@@ -70,17 +70,23 @@ public class Main {
         //estudiantesOrdenadosPorDNI.forEach(System.out::println);
 
         // Recuperar un estudiante por número de libreta universitaria
-        EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
+        /*EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
         if (estudiantePorLU != null) {
             System.out.println("Estudiante por LU: " + estudiantePorLU);
         } else {
             System.out.println("No se encontró un estudiante con el LU especificado.");
+        }*/
+
+        // Recuperar estudiantes por género
+        List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
+        if (!estudiantesPorGenero.isEmpty()) {
+            System.out.println("Estudiantes por género:");
+            estudiantesPorGenero.forEach(System.out::println);
+        } else {
+            System.out.println("No se encontraron estudiantes del género especificado.");
         }
 
-        /*List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
-        estudiantesPorGenero.forEach(System.out::println);
-
-        List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
+        /*List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
         estudiantesPorCarreraYCiudad.forEach(System.out::println);
 
         List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();

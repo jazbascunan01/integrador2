@@ -125,14 +125,24 @@ public class EstudianteRepository {
      *
      * @return estudiantes por género
      */
-    public List<Estudiante> verEstudiantesPorGenero(String genero) {
+    public List<EstudianteDTO> verEstudiantesPorGenero(String genero) {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class)
-                .setParameter("genero", genero)
-                .getResultList();
-        em.close();
-        return estudiantes;
+        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
+        try {
+            estudiantesDTO = em.createQuery(
+                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
+                                    "FROM Estudiante e WHERE e.genero = :genero",
+                            EstudianteDTO.class)
+                    .setParameter("genero", genero)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error al recuperar estudiantes por género: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return estudiantesDTO;
     }
+
 
     /**
      * Punto G: recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
