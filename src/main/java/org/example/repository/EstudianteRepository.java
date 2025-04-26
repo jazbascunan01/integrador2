@@ -101,10 +101,22 @@ public class EstudianteRepository {
      *
      * @return estudiante
      */
-    public Estudiante getEstudianteByLU(int num_lu) {
+    public EstudianteDTO getEstudianteByLU(int num_lu) {
         EntityManager em = JPAUtil.getEntityManager();
-        return em.createQuery("SELECT e FROM Estudiante e WHERE e.num_lu = :num_lu", Estudiante.class)
-                .setParameter("num_lu", num_lu).getSingleResult();
+        EstudianteDTO estudianteDTO = null;
+        try {
+            estudianteDTO = em.createQuery(
+                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
+                                    "FROM Estudiante e WHERE e.num_lu = :num_lu",
+                            EstudianteDTO.class)
+                    .setParameter("num_lu", num_lu)
+                    .getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Error al recuperar estudiante por LU: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return estudianteDTO;
     }
 
 

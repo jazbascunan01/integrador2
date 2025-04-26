@@ -66,13 +66,18 @@ public class Main {
             System.out.println("No se encontró el estudiante o la carrera.");
         }
 
-        List<EstudianteDTO> estudiantesOrdenadosPorDNI = estudianteRepository.verEstudiantesOrdenadosPorDNI();
-        estudiantesOrdenadosPorDNI.forEach(System.out::println);
+        //List<EstudianteDTO> estudiantesOrdenadosPorDNI = estudianteRepository.verEstudiantesOrdenadosPorDNI();
+        //estudiantesOrdenadosPorDNI.forEach(System.out::println);
 
-        /*EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
-        System.out.println(estudiantePorLU);
+        // Recuperar un estudiante por número de libreta universitaria
+        EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
+        if (estudiantePorLU != null) {
+            System.out.println("Estudiante por LU: " + estudiantePorLU);
+        } else {
+            System.out.println("No se encontró un estudiante con el LU especificado.");
+        }
 
-        List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
+        /*List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
         estudiantesPorGenero.forEach(System.out::println);
 
         List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
@@ -80,7 +85,7 @@ public class Main {
 
         List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
         carrerasConEstudiantes.forEach(System.out::println);*/
-        List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
-        reporte.forEach(System.out::println);
+        //List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
+        //reporte.forEach(System.out::println);
     }
 }
