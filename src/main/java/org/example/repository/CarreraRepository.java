@@ -5,8 +5,6 @@ import org.example.dto.CarreraDTO;
 import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
-import org.example.modelo.Estudiante;
-import org.example.modelo.Estudiante_Carrera;
 
 import java.io.FileReader;
 import java.util.ArrayList;

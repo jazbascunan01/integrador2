@@ -9,7 +9,6 @@ import org.example.modelo.Estudiante_Carrera;
 
 
 import java.io.FileReader;
-import java.util.List;
 
 public class Estudiante_CarreraRepository {
     public void insertarDesdeCSV(String path) {
