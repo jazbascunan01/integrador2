@@ -73,25 +73,4 @@ public class Main {
         List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
         reporte.forEach(System.out::println);
     }
-
-    /*public static void imprimirReporte(CarreraRepository carreraRepository) {
-        List<Object[]> reporte = carreraRepository.getReporteCarreras();
-
-        String carreraActual = null;
-        for (Object[] fila : reporte) {
-            String nombreCarrera = (String) fila[0];
-            int anio = (int) fila[1];
-            long inscriptos = (long) fila[2];
-            long egresados = (long) fila[3];
-
-            if (!nombreCarrera.equals(carreraActual)) {
-                System.out.println("\nCarrera: " + nombreCarrera);
-                carreraActual = nombreCarrera;
-            }
-
-            System.out.printf("Año %d: Inscriptos: %d, Egresados: %d%n",
-                    anio, inscriptos, egresados);
-        }
-    }*/
-
 }
