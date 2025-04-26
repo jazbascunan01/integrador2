@@ -10,8 +10,8 @@ import lombok.*;
 public class ReporteCarreraDTO {
     private String carrera;
     private int anio;
-    private int inscriptos;
-    private int egresados;
+    private long inscriptos;
+    private long egresados;
 
     public ReporteCarreraDTO(String carrera, int anio) {
         this.carrera = carrera;

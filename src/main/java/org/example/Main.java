@@ -1,6 +1,7 @@
 package org.example;
 
 import jakarta.persistence.EntityManager;
+import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 import org.example.modelo.Estudiante;
@@ -68,10 +69,12 @@ public class Main {
         //System.out.println(estudianteRepository.verEstudiantesPorGenero("Male"));
         //System.out.println(carrera_repository.getCarrerasConEstudiantes());
         //System.out.println(estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan"));
-        imprimirReporte(carrera_repository);
+        //imprimirReporte(carrera_repository);
+        List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
+        reporte.forEach(System.out::println);
     }
 
-    public static void imprimirReporte(CarreraRepository carreraRepository) {
+    /*public static void imprimirReporte(CarreraRepository carreraRepository) {
         List<Object[]> reporte = carreraRepository.getReporteCarreras();
 
         String carreraActual = null;
@@ -89,6 +92,6 @@ public class Main {
             System.out.printf("Año %d: Inscriptos: %d, Egresados: %d%n",
                     anio, inscriptos, egresados);
         }
-    }
+    }*/
 
 }

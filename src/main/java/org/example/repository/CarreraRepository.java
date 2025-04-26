@@ -55,18 +55,19 @@ public class CarreraRepository {
         return carreras;
     }
 
-    public List<Object[]> getReporteCarreras() {
+    public List<ReporteCarreraDTO> getReporteCarreras() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
-            String jpql = "SELECT c.nombre, ec.anio_inscripcion, " +
+            String jpql = "SELECT new org.example.dto.ReporteCarreraDTO(" +
+                    "c.nombre, ec.anio_inscripcion, " +
                     "COUNT(DISTINCT ec.estudiante), " +
-                    "SUM(CASE WHEN ec.anio_graduacion IS NOT NULL THEN 1 ELSE 0 END) " +
+                    "SUM(CASE WHEN ec.anio_graduacion IS NOT NULL THEN 1 ELSE 0 END)) " +
                     "FROM Estudiante_Carrera ec " +
                     "JOIN ec.carrera c " +
                     "GROUP BY c.nombre, ec.anio_inscripcion " +
                     "ORDER BY c.nombre ASC, ec.anio_inscripcion ASC";
 
-            return em.createQuery(jpql, Object[].class).getResultList();
+            return em.createQuery(jpql, ReporteCarreraDTO.class).getResultList();
         } finally {
             em.close();
         }
