@@ -12,4 +12,8 @@ public class CarreraDTO {
     private int id;
     private String nombre;
     private int duracion;
+    public CarreraDTO(String nombre, int cantidadEstudiantes) {
+        this.nombre = nombre;
+        this.duracion = cantidadEstudiantes; // Reutilizando el campo 'duracion' para almacenar la cantidad de estudiantes
+    }
 }

@@ -1,6 +1,7 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
+import org.example.dto.CarreraDTO;
 import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
@@ -43,16 +44,23 @@ public class CarreraRepository {
      *
      * @return carreras
      */
-    public List<Carrera> getCarrerasConEstudiantes() {
+    public List<CarreraDTO> getCarrerasConEstudiantes() {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Carrera> carreras = em.createQuery(
-                "SELECT c FROM Carrera c " +
-                        "WHERE SIZE(c.carreras) > 0 " +  // Filtra carreras con al menos un inscripto
-                        "ORDER BY SIZE(c.carreras) DESC",  // Ordena por cantidad de inscriptos (descendente)
-                Carrera.class
-        ).getResultList();
-        em.close();
-        return carreras;
+        List<CarreraDTO> carrerasDTO = new ArrayList<>();
+        try {
+            carrerasDTO = em.createQuery(
+                            "SELECT new org.example.dto.CarreraDTO(c.nombre, SIZE(c.carreras)) " +
+                                    "FROM Carrera c " +
+                                    "WHERE SIZE(c.carreras) > 0 " +
+                                    "ORDER BY SIZE(c.carreras) DESC",
+                            CarreraDTO.class)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error al recuperar carreras con estudiantes: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return carrerasDTO;
     }
 
     public List<ReporteCarreraDTO> getReporteCarreras() {

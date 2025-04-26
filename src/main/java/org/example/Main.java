@@ -87,15 +87,24 @@ public class Main {
         }*/
 
         // Recuperar estudiantes por carrera y ciudad
-        List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
+        /*List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
         if (!estudiantesPorCarreraYCiudad.isEmpty()) {
             System.out.println("Estudiantes por carrera y ciudad:");
             estudiantesPorCarreraYCiudad.forEach(System.out::println);
         } else {
             System.out.println("No se encontraron estudiantes para la carrera y ciudad especificadas.");
+        }*/
+        // Recuperar las carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
+        List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
+        if (!carrerasConEstudiantes.isEmpty()) {
+            System.out.println("Carreras con estudiantes inscriptos:");
+            carrerasConEstudiantes.forEach(carreraDTO -> {
+                System.out.println("Carrera: " + carreraDTO.getNombre() + ", Cantidad de inscriptos: " + carreraDTO.getDuracion());
+            });
+        } else {
+            System.out.println("No se encontraron carreras con estudiantes inscriptos.");
         }
-        /*List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
-        estudiantesPorCarreraYCiudad.forEach(System.out::println);
+  /*
 
         List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
         carrerasConEstudiantes.forEach(System.out::println);*/
