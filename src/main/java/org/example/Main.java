@@ -66,34 +66,53 @@ public class Main {
             System.out.println("No se encontró el estudiante o la carrera.");
         }
 
-        //List<EstudianteDTO> estudiantesOrdenadosPorDNI = estudianteRepository.verEstudiantesOrdenadosPorDNI();
-        //estudiantesOrdenadosPorDNI.forEach(System.out::println);
+        List<EstudianteDTO> estudiantesOrdenadosPorDNI = estudianteRepository.verEstudiantesOrdenadosPorDNI();
+        System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
+        System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
+        System.out.println("╠════════════╪══════════════╪══════════════╪══════╪════════════╪═════════════════╪════════╣");
+        estudiantesOrdenadosPorDNI.forEach(System.out::println);
+        System.out.println("╚════════════╧══════════════╧══════════════╧══════╧════════════╧═════════════════╧════════╝");
 
         // Recuperar un estudiante por número de libreta universitaria
-        /*EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
+        EstudianteDTO estudiantePorLU = estudianteRepository.getEstudianteByLU(1001);
         if (estudiantePorLU != null) {
-            System.out.println("Estudiante por LU: " + estudiantePorLU);
+            System.out.println("Estudiante por LU: ");
+            System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
+            System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
+            System.out.println("╠════════════╪══════════════╪══════════════╪══════╪════════════╪═════════════════╪════════╣");
+            System.out.println(estudiantePorLU);
+            System.out.println("╚════════════╧══════════════╧══════════════╧══════╧════════════╧═════════════════╧════════╝");
         } else {
             System.out.println("No se encontró un estudiante con el LU especificado.");
-        }*/
+        }
 
         // Recuperar estudiantes por género
-        /*List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
+        List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
         if (!estudiantesPorGenero.isEmpty()) {
             System.out.println("Estudiantes por género:");
+            System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
+            System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
+            System.out.println("╠════════════╪══════════════╪══════════════╪══════╪════════════╪═════════════════╪════════╣");
             estudiantesPorGenero.forEach(System.out::println);
+            System.out.println("╚════════════╧══════════════╧══════════════╧══════╧════════════╧═════════════════╧════════╝");
         } else {
             System.out.println("No se encontraron estudiantes del género especificado.");
-        }*/
+        }
 
         // Recuperar estudiantes por carrera y ciudad
-        /*List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
+        List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
         if (!estudiantesPorCarreraYCiudad.isEmpty()) {
             System.out.println("Estudiantes por carrera y ciudad:");
+            System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
+            System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
+            System.out.println("╠════════════╪══════════════╪══════════════╪══════╪════════════╪═════════════════╪════════╣");
             estudiantesPorCarreraYCiudad.forEach(System.out::println);
+            System.out.println("╚════════════╧══════════════╧══════════════╧══════╧════════════╧═════════════════╧════════╝");
         } else {
             System.out.println("No se encontraron estudiantes para la carrera y ciudad especificadas.");
-        }*/
+        }
+
+
         // Recuperar las carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
         List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
         if (!carrerasConEstudiantes.isEmpty()) {
