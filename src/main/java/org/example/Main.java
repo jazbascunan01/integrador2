@@ -78,14 +78,22 @@ public class Main {
         }*/
 
         // Recuperar estudiantes por género
-        List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
+        /*List<EstudianteDTO> estudiantesPorGenero = estudianteRepository.verEstudiantesPorGenero("Male");
         if (!estudiantesPorGenero.isEmpty()) {
             System.out.println("Estudiantes por género:");
             estudiantesPorGenero.forEach(System.out::println);
         } else {
             System.out.println("No se encontraron estudiantes del género especificado.");
-        }
+        }*/
 
+        // Recuperar estudiantes por carrera y ciudad
+        List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
+        if (!estudiantesPorCarreraYCiudad.isEmpty()) {
+            System.out.println("Estudiantes por carrera y ciudad:");
+            estudiantesPorCarreraYCiudad.forEach(System.out::println);
+        } else {
+            System.out.println("No se encontraron estudiantes para la carrera y ciudad especificadas.");
+        }
         /*List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
         estudiantesPorCarreraYCiudad.forEach(System.out::println);
 
