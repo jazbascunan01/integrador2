@@ -64,6 +64,8 @@ public class Main {
             System.out.println("No se encontró el estudiante o la carrera.");
         }
 
+        // Recuperar todos los estudiantes ordenados por DNI
+        System.out.println("Estudiantes ordenados por DNI:");
         List<EstudianteDTO> estudiantesOrdenadosPorDNI = estudianteRepository.verEstudiantesOrdenadosPorDNI();
         System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
         System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
@@ -125,8 +127,14 @@ public class Main {
         } else {
             System.out.println("No se encontraron carreras con estudiantes inscriptos.");
         }
+        // Generar un reporte de las carreras con información de inscriptos y egresados por año
+        System.out.println("Reporte de carreras ordenadas alfabética y cronológicamente");
+        List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
+        System.out.println("╔════════════════════════════════════╤═══════╤════════════╤════════════╗");
+        System.out.println("║ Carrera                            │ Año   │ Inscriptos │ Egresados  ║");
+        System.out.println("╠════════════════════════════════════╪═══════╪════════════╪════════════╣");
+        reporte.forEach(System.out::println);
+        System.out.println("╚════════════════════════════════════╧═══════╧════════════╧════════════╝");
 
-        //List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
-        //reporte.forEach(System.out::println);
     }
 }

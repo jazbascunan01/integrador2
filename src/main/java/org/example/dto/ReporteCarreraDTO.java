@@ -19,4 +19,22 @@ public class ReporteCarreraDTO {
         this.inscriptos = 0;
         this.egresados = 0;
     }
+    @Override
+    public String toString() {
+        return String.format("║ %-34s │ %-5d │ %-10d │ %-10d ║",
+                cortar(carrera, 30),
+                anio,
+                inscriptos,
+                egresados);
+    }
+
+    // Método auxiliar para cortar cadenas largas
+    private String cortar(String texto, int maxLength) {
+        if (texto == null) return "";
+        if (texto.length() <= maxLength) {
+            return texto;
+        }
+        return texto.substring(0, maxLength - 1) + "…";
+    }
+
 }
