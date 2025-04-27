@@ -27,8 +27,7 @@ public class Estudiante {
     private String ciudad;
     @Column (nullable = false)
     private int num_lu;
-// TODO ver que problema hay con el LAZY
-    @OneToMany (mappedBy = "estudiante", fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "estudiante", fetch = FetchType.LAZY)
     private List<Estudiante_Carrera> carreras;
 
 
