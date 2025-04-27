@@ -1,13 +1,11 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
-import org.example.dto.CarreraDTO;
 import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarreraRepository {
