@@ -24,6 +24,15 @@ public class Main {
         carrera_repository.insertarDesdeCSV("carreras.csv");
         estudiante_carrera_repository_car.insertarDesdeCSV("estudianteCarrera.csv");
 
+        System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                   Grupo N° 7: Bascuñan Jazmín, Fernández Mateo                     ║");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════════════║");
+        System.out.println("║  ░█▀█░█▀▄░█▀█░█░█░█▀▀░█▀▀░▀█▀░█▀█░░░▀█▀░█▀█░▀█▀░█▀▀░█▀▀░█▀▄░█▀█░█▀▄░█▀█░█▀▄░░░▀▀▄  ║");
+        System.out.println("║  ░█▀▀░█▀▄░█░█░░█░░█▀▀░█░░░░█░░█░█░░░░█░░█░█░░█░░█▀▀░█░█░█▀▄░█▀█░█░█░█░█░█▀▄░░░▄▀░  ║");
+        System.out.println("║  ░▀░░░▀░▀░▀▀▀░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀░░░▀▀▀░▀░▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀▀▀  ║");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════════════║");
+        System.out.println("║                     Carga y Consulta de Datos con JPA y JPQL                       ║");
+        System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝\n");
 
         EstudianteRepository estudianteRepository = new EstudianteRepository();
 
