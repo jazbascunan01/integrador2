@@ -1,10 +1,7 @@
 package org.example;
 
 import jakarta.persistence.EntityManager;
-import org.example.dto.CarreraDTO;
-import org.example.dto.EstudianteDTO;
-import org.example.dto.Estudiante_CarreraDTO;
-import org.example.dto.ReporteCarreraDTO;
+import org.example.dto.*;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
 import org.example.modelo.Estudiante;
@@ -116,19 +113,19 @@ public class Main {
 
 
         // Recuperar las carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
-        List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
+        List<CarreraConEstudiantesDTO> carrerasConEstudiantes = estudiante_carrera_repository_car.getCarrerasConEstudiantes();
         if (!carrerasConEstudiantes.isEmpty()) {
             System.out.println("Carreras con estudiantes inscriptos:");
-            carrerasConEstudiantes.forEach(carreraDTO -> {
-                System.out.println("Carrera: " + carreraDTO.getNombre() + ", Cantidad de inscriptos: " + carreraDTO.getDuracion());
-            });
+            System.out.println("╔════════════════════════════════════╤══════════════╗");
+            System.out.println("║ Carrera                            │ Inscriptos   ║");
+            System.out.println("╠════════════════════════════════════╪══════════════╣");
+            carrerasConEstudiantes.forEach(System.out::println);
+            System.out.println("╚════════════════════════════════════╧══════════════╝");
+
         } else {
             System.out.println("No se encontraron carreras con estudiantes inscriptos.");
         }
-  /*
 
-        List<CarreraDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
-        carrerasConEstudiantes.forEach(System.out::println);*/
         //List<ReporteCarreraDTO> reporte = carrera_repository.getReporteCarreras();
         //reporte.forEach(System.out::println);
     }

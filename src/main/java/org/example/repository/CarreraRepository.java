@@ -37,29 +37,6 @@ public class CarreraRepository {
         }
     }
 
-    /**
-     * Punto F: recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
-     *
-     * @return carreras
-     */
-    public List<CarreraDTO> getCarrerasConEstudiantes() {
-        EntityManager em = JPAUtil.getEntityManager();
-        List<CarreraDTO> carrerasDTO = new ArrayList<>();
-        try {
-            carrerasDTO = em.createQuery(
-                            "SELECT new org.example.dto.CarreraDTO(c.nombre, SIZE(c.carreras)) " +
-                                    "FROM Carrera c " +
-                                    "WHERE SIZE(c.carreras) > 0 " +
-                                    "ORDER BY SIZE(c.carreras) DESC",
-                            CarreraDTO.class)
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error al recuperar carreras con estudiantes: " + e.getMessage());
-        } finally {
-            em.close();
-        }
-        return carrerasDTO;
-    }
 
     public List<ReporteCarreraDTO> getReporteCarreras() {
         EntityManager em = JPAUtil.getEntityManager();

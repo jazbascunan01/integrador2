@@ -2,6 +2,8 @@ package org.example.repository;
 
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
+import org.example.dto.CarreraConEstudiantesDTO;
+import org.example.dto.CarreraDTO;
 import org.example.dto.Estudiante_CarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
@@ -90,5 +92,30 @@ public class Estudiante_CarreraRepository {
             em.close();
         }
         return estudiantesCarreraDTO;
+    }
+    /**
+     * Punto F: recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
+     *
+     * @return carreras
+     */
+    public List<CarreraConEstudiantesDTO> getCarrerasConEstudiantes() {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<CarreraConEstudiantesDTO> carrerasDTO = new ArrayList<>();
+        try {
+            carrerasDTO = em.createQuery(
+                            "SELECT new org.example.dto.CarreraConEstudiantesDTO(c.id, c.nombre, COUNT(ec)) " +
+                                    "FROM Estudiante_Carrera ec " +
+                                    "JOIN ec.carrera c " +
+                                    "GROUP BY c.id, c.nombre " +
+                                    "HAVING COUNT(ec) > 0 " +
+                                    "ORDER BY COUNT(ec) DESC",
+                            CarreraConEstudiantesDTO.class)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Error al recuperar carreras con estudiantes: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return carrerasDTO;
     }
 }
