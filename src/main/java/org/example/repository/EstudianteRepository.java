@@ -143,31 +143,4 @@ public class EstudianteRepository {
         return estudiantesDTO;
     }
 
-
-    /**
-     * Punto G: recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
-     *
-     * @return estudiantes
-     */
-    public List<EstudianteDTO> getEstudiantesByCarreraYCiudad(String carreraNombre, String ciudad) {
-        EntityManager em = JPAUtil.getEntityManager();
-        List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
-        try {
-            estudiantesDTO = em.createQuery(
-                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
-                                    "FROM Estudiante e " +
-                                    "JOIN e.carreras ec " +
-                                    "JOIN ec.carrera c " +
-                                    "WHERE c.nombre = :carreraNombre AND e.ciudad = :ciudad",
-                            EstudianteDTO.class)
-                    .setParameter("carreraNombre", carreraNombre)
-                    .setParameter("ciudad", ciudad)
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error al recuperar estudiantes por carrera y ciudad: " + e.getMessage());
-        } finally {
-            em.close();
-        }
-        return estudiantesDTO;
-    }
 }

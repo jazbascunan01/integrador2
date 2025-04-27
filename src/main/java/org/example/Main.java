@@ -3,6 +3,7 @@ package org.example;
 import jakarta.persistence.EntityManager;
 import org.example.dto.CarreraDTO;
 import org.example.dto.EstudianteDTO;
+import org.example.dto.Estudiante_CarreraDTO;
 import org.example.dto.ReporteCarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
@@ -100,14 +101,15 @@ public class Main {
         }
 
         // Recuperar estudiantes por carrera y ciudad
-        List<EstudianteDTO> estudiantesPorCarreraYCiudad = estudianteRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
+        Estudiante_CarreraRepository estudianteCarreraRepository = new Estudiante_CarreraRepository();
+        List<Estudiante_CarreraDTO> estudiantesPorCarreraYCiudad = estudianteCarreraRepository.getEstudiantesByCarreraYCiudad("Arte", "Jiaoyuan");
         if (!estudiantesPorCarreraYCiudad.isEmpty()) {
             System.out.println("Estudiantes por carrera y ciudad:");
-            System.out.println("╔════════════╤══════════════╤══════════════╤══════╤════════════╤═════════════════╤════════╗");
-            System.out.println("║ DNI        │ Nombre       │ Apellido     │ Edad │ Género     │ Ciudad          │ LU     ║");
-            System.out.println("╠════════════╪══════════════╪══════════════╪══════╪════════════╪═════════════════╪════════╣");
+            System.out.println("╔═══════════════╤══════════════╤══════════════╤══════════════╤══════════════════════╤══════════════════╤═════════════════╤════════════╗");
+            System.out.println("║ ID Estudiante │ Nombre       │ Apellido     │ Ciudad       │ Carrera              │  Año Inscripción │  Año Graduación │ Antigüedad ║");
+            System.out.println("╠═══════════════╪══════════════╪══════════════╪══════════════╪══════════════════════╪══════════════════╪═════════════════╪════════════╣");
             estudiantesPorCarreraYCiudad.forEach(System.out::println);
-            System.out.println("╚════════════╧══════════════╧══════════════╧══════╧════════════╧═════════════════╧════════╝");
+            System.out.println("╚═══════════════╧══════════════╧══════════════╧══════════════╧══════════════════════╧══════════════════╧═════════════════╧════════════╝");
         } else {
             System.out.println("No se encontraron estudiantes para la carrera y ciudad especificadas.");
         }
