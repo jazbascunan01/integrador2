@@ -1,6 +1,7 @@
 package org.example.repository;
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import org.example.dto.EstudianteDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Estudiante;
@@ -66,11 +67,32 @@ public class EstudianteRepository {
      */
     public void altaEstudiante(Estudiante estudiante) {
         EntityManager em = JPAUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(estudiante);
-        em.getTransaction().commit();
-        em.close();
-        System.out.println("Estudiante dado de alta correctamente.");
+        try {
+            em.getTransaction().begin();
+
+            // Verificar si el estudiante ya existe
+            Estudiante estudianteExistente = em.find(Estudiante.class, estudiante.getDni());
+            if (estudianteExistente == null) {
+                em.persist(estudiante);
+                System.out.println("\n══════════════════════════════════════════════");
+                System.out.println("  ★ Estudiante dado de alta correctamente ★  ");
+                System.out.println("══════════════════════════════════════════════");
+            } else {
+                System.out.println("\n══════════════════════════════════════════════════════════════════");
+                System.out.println("     ➤ El estudiante con DNI " + estudiante.getDni() + " ya está registrado.   ");
+                System.out.println("══════════════════════════════════════════════════════════════════");
+
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("Error al dar de alta al estudiante: " + e.getMessage());
+        } finally {
+            em.close();
+        }
     }
 
     /**
@@ -110,7 +132,10 @@ public class EstudianteRepository {
                             EstudianteDTO.class)
                     .setParameter("num_lu", num_lu)
                     .getSingleResult();
-        } catch (Exception e) {
+        } catch (NoResultException nre) {
+            System.out.println("No se encontró un estudiante con LU: " + num_lu);
+            // estudianteDTO queda como null
+        }catch (Exception e) {
             System.out.println("Error al recuperar estudiante por LU: " + e.getMessage());
         } finally {
             em.close();

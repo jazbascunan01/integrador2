@@ -9,8 +9,10 @@ import org.example.modelo.Estudiante_Carrera;
 import org.example.repository.CarreraRepository;
 import org.example.repository.EstudianteRepository;
 import org.example.repository.Estudiante_CarreraRepository;
+import org.example.utils.Menu;
 
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Main {
@@ -19,6 +21,7 @@ public class Main {
         CarreraRepository carrera_repository = new CarreraRepository();
         EstudianteRepository estudiante_repository = new EstudianteRepository();
         Estudiante_CarreraRepository estudiante_carrera_repository_car = new Estudiante_CarreraRepository();
+        Scanner scanner = new Scanner(System.in);
 
         estudiante_repository.insertarDesdeCSV("estudiantes.csv");
         carrera_repository.insertarDesdeCSV("carreras.csv");
@@ -51,27 +54,8 @@ public class Main {
         estudianteRepository.altaEstudiante(nuevoEstudiante);
 
         //Matricular un estudiante a una carrera
-        // Buscar un estudiante existente
-        Estudiante estudiante = em.find(Estudiante.class, 12345678);
 
-        // Buscar una carrera existente
-        Carrera carrera = em.find(Carrera.class, 3);
-
-        if (estudiante != null && carrera != null) {
-            // Matricular al estudiante en la carrera
-            Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera();
-            estudianteCarrera.setEstudiante(estudiante);
-            estudianteCarrera.setCarrera(carrera);
-            estudianteCarrera.setAnio_inscripcion(2023);
-            estudianteCarrera.setAnio_graduacion(2027);
-            estudianteCarrera.setAntiguedad(0);
-
-            estudiante_carrera_repository_car.matricularEstudiante(estudianteCarrera);
-
-            System.out.println("Estudiante matriculado correctamente.");
-        } else {
-            System.out.println("No se encontró el estudiante o la carrera.");
-        }
+        estudiante_carrera_repository_car.matricularEstudiante(12345678, 3, 2023, 2027);
 
         // Recuperar todos los estudiantes ordenados por DNI
         System.out.println("Estudiantes ordenados por DNI:");
@@ -145,5 +129,64 @@ public class Main {
         reporte.forEach(System.out::println);
         System.out.println("╚════════════════════════════════════╧═══════╧════════════╧════════════╝");
 
+        System.out.println("\n╔═══════════════════════════════════════╗");
+        System.out.println("║    ¿Desea realizar otra operación?    ║");
+        System.out.println("║   (S) Sí         |    (N) No          ║");
+        System.out.println("╚═══════════════════════════════════════╝");
+
+
+        String respuesta = scanner.nextLine();
+
+        if (respuesta.equalsIgnoreCase("S")) {
+            boolean continuar = true;
+
+            while (continuar) {
+                Menu.mostrarMenu();
+                int opcion = scanner.nextInt();
+                scanner.nextLine(); // limpiar buffer
+
+                switch (opcion) {
+                    case 1:
+                        Menu.insertarEstudiante(scanner, estudianteRepository);
+                        break;
+                    case 2:
+                        Menu.matricularEstudiante(scanner, estudiante_carrera_repository_car);
+                        break;
+                    case 3:
+                        Menu.buscarPorLU(scanner, estudianteRepository);
+                        break;
+                    case 4:
+                        Menu.buscarPorGenero(scanner, estudianteRepository);
+                        break;
+                    case 5:
+                        Menu.buscarPorCarreraCiudad(scanner, estudianteCarreraRepository);
+                        break;
+                    case 6:
+                        continuar = false;
+                        System.out.println("Saliendo del programa...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida, intente nuevamente.");
+                }
+                if (continuar) {
+                    System.out.println("\n╔═══════════════════════════════════════╗");
+                    System.out.println("║    ¿Desea realizar otra operación?    ║");
+                    System.out.println("║   (S) Sí         |    (N) No          ║");
+                    System.out.println("╚═══════════════════════════════════════╝");
+
+                    String rta = scanner.nextLine();
+                    if (!rta.equalsIgnoreCase("S")) {
+                        continuar = false;
+                        System.out.println("Saliendo del programa...");
+                    }
+                }
+            }
+
+            scanner.close();
+        }else{
+            System.out.println("Saliendo del programa...");
+        }
+        }
+
     }
-}
+

@@ -51,17 +51,68 @@ public class Estudiante_CarreraRepository {
     /**
      * Inciso b. Guarda la matrícula de un estudiante en una carrera.
      *
-     * @param ec el objeto que representa la inscripción del estudiante.
+     * @param dniEstudiante      el DNI del estudiante.
+     * @param idCarrera         el ID de la carrera.
+     * @param anioInscripcion   el año de inscripción.
+     * @param anioGraduacion   el año de graduación (0 si no se ha graduado).
      */
-    public void matricularEstudiante(Estudiante_Carrera ec) {
-        EntityManager em = JPAUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(ec);
-        em.getTransaction().commit();
-        em.close();
+    public void matricularEstudiante(int dniEstudiante, int idCarrera, int anioInscripcion, int anioGraduacion) {
+        EntityManager em = null;
+        try {
+            em = JPAUtil.getEntityManager();
+            em.getTransaction().begin();
+
+            // Buscar el estudiante y la carrera
+            Estudiante estudiante = em.find(Estudiante.class, dniEstudiante);
+            Carrera carrera = em.find(Carrera.class, idCarrera);
+
+            if (estudiante != null && carrera != null) {
+                // Verificar si ya está matriculado
+                boolean yaMatriculado = estaMatriculado(dniEstudiante, idCarrera);
+                if (yaMatriculado) {
+                    System.out.println("\n══════════════════════════════════════════════════════════════════");
+                    System.out.println("     ➤ El estudiante ya está matriculado en esa carrera.   ");
+                    System.out.println("══════════════════════════════════════════════════════════════════");
+                    return;
+                }
+
+                // Crear y persistir la matrícula
+                Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera();
+                estudianteCarrera.setEstudiante(estudiante);
+                estudianteCarrera.setCarrera(carrera);
+                estudianteCarrera.setAnio_inscripcion(anioInscripcion);
+
+                if (anioGraduacion > 0) {
+                    estudianteCarrera.setAnio_graduacion(anioGraduacion);
+                    estudianteCarrera.setAntiguedad(anioGraduacion - anioInscripcion);
+                } else {
+                    int anioActual = java.time.Year.now().getValue();
+                    estudianteCarrera.setAntiguedad(anioActual - anioInscripcion);
+                }
+
+                em.persist(estudianteCarrera);
+                em.getTransaction().commit();
+                System.out.println("\n═══════════════════════════════════════════════");
+                System.out.println("   ★ Estudiante matriculado correctamente ★   ");
+                System.out.println("═══════════════════════════════════════════════");
+            } else {
+                System.out.println("\n══════════════════════════════════════════════════════════════════");
+                System.out.println("     ➤ No se encontró el estudiante o la carrera.   ");
+                System.out.println("══════════════════════════════════════════════════════════════════");
+            }
+        } catch (Exception e) {
+            if (em != null && em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("\n══════════════════════════════════════════════════════════════════");
+            System.out.println("     ➤ Error al matricular al estudiante: " + e.getMessage() + "   ");
+            System.out.println("══════════════════════════════════════════════════════════════════");
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
-
-
     /**
      * Punto G: recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
      *
@@ -116,5 +167,18 @@ public class Estudiante_CarreraRepository {
             em.close();
         }
         return carrerasDTO;
+    }
+    public static boolean estaMatriculado(int dniEstudiante, int idCarrera) {
+        EntityManager em = JPAUtil.getEntityManager();
+        Estudiante_Carrera resultado = em.createQuery(
+                        "SELECT ec FROM Estudiante_Carrera ec WHERE ec.estudiante.dni = :dni AND ec.carrera.id = :id",
+                        Estudiante_Carrera.class)
+                .setParameter("dni", dniEstudiante)
+                .setParameter("id", idCarrera)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+
+        return resultado != null;
     }
 }
