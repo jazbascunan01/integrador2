@@ -143,31 +143,6 @@ public class Estudiante_CarreraRepository {
         }
         return estudiantesCarreraDTO;
     }
-    /**
-     * Punto F: recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
-     *
-     * @return carreras
-     */
-    public List<CarreraConEstudiantesDTO> getCarrerasConEstudiantes() {
-        EntityManager em = JPAUtil.getEntityManager();
-        List<CarreraConEstudiantesDTO> carrerasDTO = new ArrayList<>();
-        try {
-            carrerasDTO = em.createQuery(
-                            "SELECT new org.example.dto.CarreraConEstudiantesDTO(c.id_carrera, c.carrera, COUNT(ec)) " +
-                                    "FROM Estudiante_Carrera ec " +
-                                    "JOIN ec.carrera c " +
-                                    "GROUP BY c.id_carrera, c.carrera " +
-                                    "HAVING COUNT(ec) > 0 " +
-                                    "ORDER BY COUNT(ec) DESC",
-                            CarreraConEstudiantesDTO.class)
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Error al recuperar carreras con estudiantes: " + e.getMessage());
-        } finally {
-            em.close();
-        }
-        return carrerasDTO;
-    }
     public static boolean estaMatriculado(int DNIEstudiante, int idCarrera) {
         EntityManager em = JPAUtil.getEntityManager();
         Estudiante_Carrera resultado = em.createQuery(
