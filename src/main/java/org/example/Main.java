@@ -108,7 +108,7 @@ public class Main {
 
 
         // Recuperar las carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
-        List<CarreraConEstudiantesDTO> carrerasConEstudiantes = estudiante_carrera_repository_car.getCarrerasConEstudiantes();
+        List<CarreraConEstudiantesDTO> carrerasConEstudiantes = carrera_repository.getCarrerasConEstudiantes();
         if (!carrerasConEstudiantes.isEmpty()) {
             System.out.println("Carreras con estudiantes inscriptos:");
             System.out.println("╔════════════════════════════════════╤══════════════╗");
@@ -116,7 +116,6 @@ public class Main {
             System.out.println("╠════════════════════════════════════╪══════════════╣");
             carrerasConEstudiantes.forEach(System.out::println);
             System.out.println("╚════════════════════════════════════╧══════════════╝");
-
         } else {
             System.out.println("No se encontraron carreras con estudiantes inscriptos.");
         }
