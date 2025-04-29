@@ -2,7 +2,6 @@ package org.example.repository;
 
 import com.opencsv.CSVReader;
 import jakarta.persistence.EntityManager;
-import org.example.dto.CarreraConEstudiantesDTO;
 import org.example.dto.Estudiante_CarreraDTO;
 import org.example.factory.JPAUtil;
 import org.example.modelo.Carrera;
