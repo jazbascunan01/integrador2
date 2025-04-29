@@ -13,10 +13,10 @@ import java.util.List;
 public class Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id_carrera;
 
     @Column(nullable = false)
-    private String nombre;
+    private String carrera;
 
     @Column
     private int duracion;
@@ -26,8 +26,8 @@ public class Carrera {
     @Override
     public String toString() {
         return "Carrera{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                "id_carrera=" + id_carrera +
+                ", carrera='" + carrera + '\'' +
                 ", duracion=" + duracion +
                 ", carreras=" + carreras +
                 '}';

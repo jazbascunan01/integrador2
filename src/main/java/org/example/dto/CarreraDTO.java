@@ -9,11 +9,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class CarreraDTO {
-    private int id;
-    private String nombre;
+    private int id_carrera;
+    private String carrera;
     private int duracion;
     public CarreraDTO(String nombre, int cantidadEstudiantes) {
-        this.nombre = nombre;
+        this.carrera = nombre;
         this.duracion = cantidadEstudiantes; // Reutilizando el campo 'duracion' para almacenar la cantidad de estudiantes
     }
 }

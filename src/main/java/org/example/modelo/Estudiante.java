@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 public class Estudiante {
     @Id
-    private int dni;
+    private int DNI;
     @Column (nullable = false)
     private String nombre;
     @Column (nullable = false)
@@ -26,19 +26,19 @@ public class Estudiante {
     @Column
     private String ciudad;
     @Column (nullable = false)
-    private int num_lu;
+    private int LU;
     @OneToMany (mappedBy = "estudiante", fetch = FetchType.LAZY)
     private List<Estudiante_Carrera> carreras;
 
 
-    public Estudiante(int dni, String nombre, String apellido,  int edad, String genero, String ciudad, int LU ) {
-        this.num_lu = LU;
+    public Estudiante(int DNI, String nombre, String apellido,  int edad, String genero, String ciudad, int LU ) {
+        this.LU = LU;
         this.ciudad = ciudad;
         this.genero = genero;
         this.edad = edad;
         this.apellido = apellido;
         this.nombre = nombre;
-        this.dni = dni;
+        this.DNI = DNI;
         this.carreras = new ArrayList<>();
     }
 }

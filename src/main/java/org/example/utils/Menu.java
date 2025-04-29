@@ -25,7 +25,7 @@ public class Menu {
 
     public static void insertarEstudiante(Scanner scanner, EstudianteRepository repo) {
         System.out.println("Ingrese DNI:");
-        int dni = validarEntero(scanner);
+        int DNI = validarEntero(scanner);
 
         System.out.println("Ingrese nombre:");
         String nombre = validarString(scanner);
@@ -49,25 +49,25 @@ public class Menu {
         System.out.println("Ingrese número de libreta universitaria:");
         int lu = validarEntero(scanner);
 
-        Estudiante nuevo = new Estudiante(dni, nombre, apellido, edad, genero, ciudad, lu);
+        Estudiante nuevo = new Estudiante(DNI, nombre, apellido, edad, genero, ciudad, lu);
         repo.altaEstudiante(nuevo);
     }
 
     public static void matricularEstudiante(Scanner scanner, Estudiante_CarreraRepository estudianteCarreraRepository) {
         System.out.println("Ingrese DNI del estudiante a matricular:");
-        int dniEstudiante = validarEntero(scanner);
+        int DNIEstudiante = validarEntero(scanner);
 
         System.out.println("Ingrese ID de la carrera:");
         int idCarrera = validarEntero(scanner);
 
         System.out.println("Ingrese año de inscripción:");
-        int anioInscripcion = validarEntero(scanner);
+        int inscripcion = validarEntero(scanner);
 
         System.out.println("Ingrese año de graduación (o 0 si no se graduó aún):");
-        int anioGraduacion = validarEntero(scanner);
+        int graduacion = validarEntero(scanner);
 
         // Delegar la lógica al repositorio
-        estudianteCarreraRepository.matricularEstudiante(dniEstudiante, idCarrera, anioInscripcion, anioGraduacion);
+        estudianteCarreraRepository.matricularEstudiante(DNIEstudiante, idCarrera, inscripcion, graduacion);
     }
 
 

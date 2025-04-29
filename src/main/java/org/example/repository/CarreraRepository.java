@@ -20,7 +20,7 @@ public class CarreraRepository {
 
             while ((linea = reader.readNext()) != null) {
                 Carrera carrera = new Carrera();
-                carrera.setNombre(linea[1]);
+                carrera.setCarrera(linea[1]);
                 carrera.setDuracion(Integer.parseInt(linea[2]));
 
                 em.persist(carrera);
@@ -40,13 +40,13 @@ public class CarreraRepository {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             String jpql = "SELECT new org.example.dto.ReporteCarreraDTO(" +
-                    "c.nombre, ec.anio_inscripcion, " +
+                    "c.carrera, ec.inscripcion, " +
                     "COUNT(DISTINCT ec.estudiante), " +
-                    "SUM(CASE WHEN ec.anio_graduacion IS NOT NULL THEN 1 ELSE 0 END)) " +
+                    "SUM(CASE WHEN ec.graduacion IS NOT NULL THEN 1 ELSE 0 END)) " +
                     "FROM Estudiante_Carrera ec " +
                     "JOIN ec.carrera c " +
-                    "GROUP BY c.nombre, ec.anio_inscripcion " +
-                    "ORDER BY c.nombre ASC, ec.anio_inscripcion ASC";
+                    "GROUP BY c.carrera, ec.inscripcion " +
+                    "ORDER BY c.carrera ASC, ec.inscripcion ASC";
 
             return em.createQuery(jpql, ReporteCarreraDTO.class).getResultList();
         } finally {

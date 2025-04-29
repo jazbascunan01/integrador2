@@ -32,8 +32,8 @@ public class Estudiante_CarreraRepository {
                 Carrera carrera = em.find(Carrera.class, Integer.parseInt(linea[2]));
                 estudiante_carrera.setCarrera(carrera);
 
-                estudiante_carrera.setAnio_inscripcion(Integer.parseInt((linea[3])));
-                estudiante_carrera.setAnio_graduacion(Integer.parseInt((linea[4])));
+                estudiante_carrera.setInscripcion(Integer.parseInt((linea[3])));
+                estudiante_carrera.setGraduacion(Integer.parseInt((linea[4])));
                 estudiante_carrera.setAntiguedad(Integer.parseInt((linea[5])));
 
 
@@ -51,24 +51,24 @@ public class Estudiante_CarreraRepository {
     /**
      * Inciso b. Guarda la matrícula de un estudiante en una carrera.
      *
-     * @param dniEstudiante      el DNI del estudiante.
+     * @param DNIEstudiante      el DNI del estudiante.
      * @param idCarrera         el ID de la carrera.
-     * @param anioInscripcion   el año de inscripción.
-     * @param anioGraduacion   el año de graduación (0 si no se ha graduado).
+     * @param inscripcion   el año de inscripción.
+     * @param graduacion   el año de graduación (0 si no se ha graduado).
      */
-    public void matricularEstudiante(int dniEstudiante, int idCarrera, int anioInscripcion, int anioGraduacion) {
+    public void matricularEstudiante(int DNIEstudiante, int idCarrera, int inscripcion, int graduacion) {
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
 
             // Buscar el estudiante y la carrera
-            Estudiante estudiante = em.find(Estudiante.class, dniEstudiante);
+            Estudiante estudiante = em.find(Estudiante.class, DNIEstudiante);
             Carrera carrera = em.find(Carrera.class, idCarrera);
 
             if (estudiante != null && carrera != null) {
                 // Verificar si ya está matriculado
-                boolean yaMatriculado = estaMatriculado(dniEstudiante, idCarrera);
+                boolean yaMatriculado = estaMatriculado(DNIEstudiante, idCarrera);
                 if (yaMatriculado) {
                     System.out.println("\n══════════════════════════════════════════════════════════════════");
                     System.out.println("     ➤ El estudiante ya está matriculado en esa carrera.   ");
@@ -80,14 +80,14 @@ public class Estudiante_CarreraRepository {
                 Estudiante_Carrera estudianteCarrera = new Estudiante_Carrera();
                 estudianteCarrera.setEstudiante(estudiante);
                 estudianteCarrera.setCarrera(carrera);
-                estudianteCarrera.setAnio_inscripcion(anioInscripcion);
+                estudianteCarrera.setInscripcion(inscripcion);
 
-                if (anioGraduacion > 0) {
-                    estudianteCarrera.setAnio_graduacion(anioGraduacion);
-                    estudianteCarrera.setAntiguedad(anioGraduacion - anioInscripcion);
+                if (graduacion > 0) {
+                    estudianteCarrera.setGraduacion(graduacion);
+                    estudianteCarrera.setAntiguedad(graduacion - inscripcion);
                 } else {
                     int anioActual = java.time.Year.now().getValue();
-                    estudianteCarrera.setAntiguedad(anioActual - anioInscripcion);
+                    estudianteCarrera.setAntiguedad(anioActual - inscripcion);
                 }
 
                 em.persist(estudianteCarrera);
@@ -127,11 +127,11 @@ public class Estudiante_CarreraRepository {
         try {
             estudiantesCarreraDTO = em.createQuery(
                             "SELECT new org.example.dto.Estudiante_CarreraDTO(" +
-                                    "ec.id, e.nombre, e.apellido, e.ciudad, c.nombre, ec.anio_inscripcion, ec.anio_graduacion, ec.antiguedad) " +
+                                    "ec.id, e.nombre, e.apellido, e.ciudad, c.carrera, ec.inscripcion, ec.graduacion, ec.antiguedad) " +
                                     "FROM Estudiante_Carrera ec " +
                                     "JOIN ec.estudiante e " +
                                     "JOIN ec.carrera c " +
-                                    "WHERE c.nombre = :carreraNombre AND e.ciudad = :ciudad",
+                                    "WHERE c.carrera = :carreraNombre AND e.ciudad = :ciudad",
                             Estudiante_CarreraDTO.class)
                     .setParameter("carreraNombre", carreraNombre)
                     .setParameter("ciudad", ciudad)
@@ -153,10 +153,10 @@ public class Estudiante_CarreraRepository {
         List<CarreraConEstudiantesDTO> carrerasDTO = new ArrayList<>();
         try {
             carrerasDTO = em.createQuery(
-                            "SELECT new org.example.dto.CarreraConEstudiantesDTO(c.id, c.nombre, COUNT(ec)) " +
+                            "SELECT new org.example.dto.CarreraConEstudiantesDTO(c.id_carrera, c.carrera, COUNT(ec)) " +
                                     "FROM Estudiante_Carrera ec " +
                                     "JOIN ec.carrera c " +
-                                    "GROUP BY c.id, c.nombre " +
+                                    "GROUP BY c.id_carrera, c.carrera " +
                                     "HAVING COUNT(ec) > 0 " +
                                     "ORDER BY COUNT(ec) DESC",
                             CarreraConEstudiantesDTO.class)
@@ -168,12 +168,12 @@ public class Estudiante_CarreraRepository {
         }
         return carrerasDTO;
     }
-    public static boolean estaMatriculado(int dniEstudiante, int idCarrera) {
+    public static boolean estaMatriculado(int DNIEstudiante, int idCarrera) {
         EntityManager em = JPAUtil.getEntityManager();
         Estudiante_Carrera resultado = em.createQuery(
-                        "SELECT ec FROM Estudiante_Carrera ec WHERE ec.estudiante.dni = :dni AND ec.carrera.id = :id",
+                        "SELECT ec FROM Estudiante_Carrera ec WHERE ec.estudiante.DNI = :DNI AND ec.carrera.id_carrera = :id",
                         Estudiante_Carrera.class)
-                .setParameter("dni", dniEstudiante)
+                .setParameter("DNI", DNIEstudiante)
                 .setParameter("id", idCarrera)
                 .getResultStream()
                 .findFirst()

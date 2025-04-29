@@ -11,10 +11,10 @@ import lombok.*;
 public class Estudiante_Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_estudiante_carrera;
+    private int id;
 
     @ManyToOne
-    @JoinColumn (name = "dni_estudiante")
+    @JoinColumn (name = "id_estudiante")
     private Estudiante estudiante;
 
     @ManyToOne
@@ -22,10 +22,10 @@ public class Estudiante_Carrera {
     private Carrera carrera;
 
     @Column (nullable = false)
-    private int anio_inscripcion;
+    private int inscripcion;
 
     @Column
-    private int anio_graduacion;
+    private int graduacion;
 
     @Column
     private int antiguedad;

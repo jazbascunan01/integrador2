@@ -8,26 +8,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Estudiante_CarreraDTO {
-    private int id_estudiante_carrera;
+    private int id;
     private String nombreEstudiante;
     private String apellidoEstudiante;
     private String ciudadEstudiante;
     private String nombreCarrera;
-    private int anioInscripcion;
-    private int anioGraduacion;
+    private int inscripcion;
+    private int graduacion;
     private int antiguedad;
 
     @Override
     public String toString() {
         return String.format(
                 "║ %-13d │ %-12s │ %-12s │ %-12s │ %-20s │ %-16d │ %-15d │ %-10d ║",
-                id_estudiante_carrera,
+                id,
                 cortar(nombreEstudiante, 12),
                 cortar(apellidoEstudiante, 12),
                 cortar(ciudadEstudiante, 12),
                 cortar(nombreCarrera, 20),
-                anioInscripcion,
-                anioGraduacion,
+                inscripcion,
+                graduacion,
                 antiguedad
         );
     }

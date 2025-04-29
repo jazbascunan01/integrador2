@@ -7,25 +7,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EstudianteDTO {
-    private int dni;
+    private int DNI;
     private String nombre;
     private String apellido;
     private int edad;
     private String genero;
     private String ciudad;
-    private int num_lu;
+    private int LU;
 
     @Override
     public String toString() {
         return String.format(
                 "║ %-10d │ %-12s │ %-12s │ %-4d │ %-10s │ %-15s │ %-6d ║",
-                dni,
+                DNI,
                 cortar(nombre, 12),
                 cortar(apellido, 12),
                 edad,
                 cortar(genero, 10),
                 cortar(ciudad, 15),
-                num_lu
+                LU
         );
     }
 

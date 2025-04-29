@@ -23,7 +23,7 @@ public class EstudianteRepository {
             em.getTransaction().begin();
 
             while ((linea = reader.readNext()) != null) {
-                int dni = Integer.parseInt(linea[0]);
+                int DNI = Integer.parseInt(linea[0]);
                 String nombre = linea[1];
                 String apellido = linea[2];
                 int edad = Integer.parseInt(linea[3]);
@@ -32,11 +32,11 @@ public class EstudianteRepository {
                 int LU = Integer.parseInt(linea[6]);
 
                 // Verifica si el estudiante ya existe
-                Estudiante estudiante = em.find(Estudiante.class, dni);
+                Estudiante estudiante = em.find(Estudiante.class, DNI);
 
                 if (estudiante == null) {
                     // Crea y persiste un nuevo estudiante
-                    estudiante = new Estudiante(dni, nombre, apellido, edad, genero, ciudad, LU);
+                    estudiante = new Estudiante(DNI, nombre, apellido, edad, genero, ciudad, LU);
                     em.persist(estudiante);
                 } else {
                     // Actualiza los datos del estudiante existente
@@ -45,7 +45,7 @@ public class EstudianteRepository {
                     estudiante.setEdad(edad);
                     estudiante.setGenero(genero);
                     estudiante.setCiudad(ciudad);
-                    estudiante.setNum_lu(LU);
+                    estudiante.setLU(LU);
                     em.merge(estudiante);
                 }
             }
@@ -71,7 +71,7 @@ public class EstudianteRepository {
             em.getTransaction().begin();
 
             // Verificar si el estudiante ya existe
-            Estudiante estudianteExistente = em.find(Estudiante.class, estudiante.getDni());
+            Estudiante estudianteExistente = em.find(Estudiante.class, estudiante.getDNI());
             if (estudianteExistente == null) {
                 em.persist(estudiante);
                 System.out.println("\n══════════════════════════════════════════════");
@@ -79,7 +79,7 @@ public class EstudianteRepository {
                 System.out.println("══════════════════════════════════════════════");
             } else {
                 System.out.println("\n══════════════════════════════════════════════════════════════════");
-                System.out.println("     ➤ El estudiante con DNI " + estudiante.getDni() + " ya está registrado.   ");
+                System.out.println("     ➤ El estudiante con DNI " + estudiante.getDNI() + " ya está registrado.   ");
                 System.out.println("══════════════════════════════════════════════════════════════════");
 
             }
@@ -105,9 +105,9 @@ public class EstudianteRepository {
         List<EstudianteDTO> estudianteDTOS = new ArrayList<>();
         try {
             estudianteDTOS = em.createQuery(
-                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
+                            "SELECT new org.example.dto.EstudianteDTO(e.DNI, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.LU) " +
                                     "FROM Estudiante e " +
-                                    "ORDER BY e.dni",
+                                    "ORDER BY e.DNI",
                             EstudianteDTO.class)
                     .getResultList();
         } catch (Exception e) {
@@ -122,18 +122,18 @@ public class EstudianteRepository {
      *
      * @return estudiante
      */
-    public EstudianteDTO getEstudianteByLU(int num_lu) {
+    public EstudianteDTO getEstudianteByLU(int LU) {
         EntityManager em = JPAUtil.getEntityManager();
         EstudianteDTO estudianteDTO = null;
         try {
             estudianteDTO = em.createQuery(
-                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
-                                    "FROM Estudiante e WHERE e.num_lu = :num_lu",
+                            "SELECT new org.example.dto.EstudianteDTO(e.DNI, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.LU) " +
+                                    "FROM Estudiante e WHERE e.LU = :LU",
                             EstudianteDTO.class)
-                    .setParameter("num_lu", num_lu)
+                    .setParameter("LU", LU)
                     .getSingleResult();
         } catch (NoResultException nre) {
-            System.out.println("No se encontró un estudiante con LU: " + num_lu);
+            System.out.println("No se encontró un estudiante con LU: " + LU);
             // estudianteDTO queda como null
         }catch (Exception e) {
             System.out.println("Error al recuperar estudiante por LU: " + e.getMessage());
@@ -154,7 +154,7 @@ public class EstudianteRepository {
         List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
         try {
             estudiantesDTO = em.createQuery(
-                            "SELECT new org.example.dto.EstudianteDTO(e.dni, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.num_lu) " +
+                            "SELECT new org.example.dto.EstudianteDTO(e.DNI, e.nombre, e.apellido, e.edad, e.genero, e.ciudad, e.LU) " +
                                     "FROM Estudiante e WHERE e.genero = :genero",
                             EstudianteDTO.class)
                     .setParameter("genero", genero)
