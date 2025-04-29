@@ -1,2 +1,4 @@
 Diagrama de clases:
 https://drive.google.com/file/d/1wR_uKBbjGHLQIrG7ERKK3aoVC87Onk9Q/view?usp=sharing
+Diagrama Entidad-Relación:
+https://drive.google.com/file/d/1G1hJIR_fIaSv_mPfRIo79B-1OdYe9U7o/view?usp=sharing
